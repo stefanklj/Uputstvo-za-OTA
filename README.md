@@ -1,6 +1,3 @@
-# Uputstvo-za-OTA
-
-
 Uputstvo za implementaciju OTA u vec postojeci projekat bez OTA.
 
 1. Prekopirati folder "components" u folder radnog projekta.
@@ -17,15 +14,15 @@ Uputstvo za implementaciju OTA u vec postojeci projekat bez OTA.
 4. U mingw32 kucati make menuconfig, i podesiti wifi i password. U menuconfig takodje
 	podesiti Partition Table na Factory app, two OTA definitions. Sacuvati sve izmene.
 	
-5. U mingw32 kucati make erase_flash flash monitor i ako je sve uspesno 
+5. U mingw32 kucati make -j5 erase_flash flash monitor i ako je sve uspesno 
 	trebala bi da pise ip adresa modula koja se posle kuca za upload koda.
 	
 6. U Makefile radnog projekta dodati 
 
-	ota: app
+ota: app
 	curl ${ESP32_IP}:8032 --data-binary @- < build/$(PROJECT_NAME).bin
 
-	po uzoru na makefile iz templejta. 
+ po uzoru na makefile iz templejta. 
  
 7. U mingw32 kucati make ota ESP32_IP=192.168.0.29 (ip adresu izmeniti na pravu, ovo je samo primer).
 	
@@ -33,6 +30,9 @@ Uputstvo za implementaciju OTA u vec postojeci projekat bez OTA.
 	ota_0 i ota_1 se menjaju pri upisu naizmenicno jer trenutni firmver se ne zaustavlja
 	 dok se novi firmver skroz ne upise,
 	i onda ga bootloader uputi da je novi firmver na drugoj particiji.
+	
+#Update: Posto sada bootloader uvek skace na OTA particiju koja je poslednja radila, 
+		 kada hocemo novi kod preko usb kabla da upisemo moramo da radimo make -j5 erase_flash flash monitor.
 	
 Posoliti po zelji. Prijatno!
  

@@ -22,10 +22,10 @@ Uputstvo za implementaciju OTA u vec postojeci projekat bez OTA.
 	
 6. U Makefile radnog projekta dodati 
 
-ota: app
+	ota: app
 	curl ${ESP32_IP}:8032 --data-binary @- < build/$(PROJECT_NAME).bin
 
- po uzoru na makefile iz templejta. 
+	po uzoru na makefile iz templejta. 
  
 7. U mingw32 kucati make ota ESP32_IP=192.168.0.29 (ip adresu izmeniti na pravu, ovo je samo primer).
 	
